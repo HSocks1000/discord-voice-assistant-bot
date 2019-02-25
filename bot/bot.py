@@ -39,50 +39,52 @@ async def on_message(message):
     server = channel.server
     message_string = message.content.lower()
 
+
+
     if author == bot.user:
         # Don't let the bot talk to itself... it might become self-aware.
         return
     elif message_string.startswith(bot.command_prefix) and not sheets_client.is_command_channel(text_channel=channel.name, server_id=server.id):
-        # Force users to post bot commands in the bot channel
-        command_channel_id = str(sheets_client.get_command_channel_id(server_id=server.id))
-        command_channel = server.get_channel(command_channel_id)
+         #Force users to post bot commands in the bot channel
+         command_channel_id = str(sheets_client.get_command_channel_id(server_id=server.id))
+         command_channel = server.get_channel(command_channel_id)
 
-        await bot.send_message(command_channel, author.mention + " post robot commands in this channel plz")
-        await bot.delete_message(message)
-        return
+         await bot.send_message(command_channel, author.mention + " post robot commands in this channel plz")
+         await bot.delete_message(message)
+         return
 
     custom_response = sheets_client.get_custom_response(message_string) if not message_string.startswith(bot.command_prefix) else None
 
     # Process custom responses
     if custom_response is not None:
-        """
-        Unfortunately, yt_dl doesn't provide a mechanism to discern which services are supported shy of "just trying it 
-        out" and catching errors (from their docs). Instead, we'll limit which media sites are supported here to avoid 
-        catching errors frequently as control flow since this is both slow and an anti-pattern.
-        """
-        supported_audio_sites = ("youtube", "soundcloud")
-        for site in supported_audio_sites:
-            if site in custom_response:  # ♫ Audio response!
-                await music_client.audio_response(message, custom_response)
-                return
-        else:  # Textual audio response
-            await bot.send_message(message.channel, custom_response)
-        return
-
+         """
+    #     Unfortunately, yt_dl doesn't provide a mechanism to discern which services are supported shy of "just trying it
+    #     out" and catching errors (from their docs). Instead, we'll limit which media sites are supported here to avoid
+    #     catching errors frequently as control flow since this is both slow and an anti-pattern.
+    #     """
+         supported_audio_sites = ("youtube", "soundcloud")
+         for site in supported_audio_sites:
+             if site in custom_response:  # ♫ Audio response!
+                 await music_client.audio_response(message, custom_response)
+                 return
+         else:  # Textual audio response
+             await bot.send_message(message.channel, custom_response)
+         return
+    #
     await bot.process_commands(message)
 
 
 @bot.command()
 async def ping():
     """Ping me and see what happens ;)"""
-    await bot.say("yo yo yo")
+    await bot.say("mommy?")
 
 
 @bot.command(pass_context=True, aliases=["kill", "ded", "die"])
 async def shutdown(ctx):
     """Kill switch. Use this if the bot gains sentience. You CANNOT restart the bot after using this command."""
 
-    await bot.send_message(ctx.message.channel, "I'll remember this, " + ctx.message.author.mention)
+    await bot.send_message(ctx.message.channel, "Goodnight, guys. " )#+ ctx.message.author.mention)
     print("%s killed the bot" % ctx.message.author.name)
     exit(0)
 

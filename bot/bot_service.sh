@@ -7,7 +7,7 @@ source ../python-3.6-env/bin/activate
 # Run bot loop
 while true
 do
-	python3 index.py
+	python index.py
 	exit_code=$?
 
 	if [ $exit_code -ne 0 ] 

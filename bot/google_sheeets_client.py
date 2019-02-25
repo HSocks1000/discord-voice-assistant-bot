@@ -14,9 +14,9 @@ class GoogleSheetsClient:
 
     def refresh_records(self):
         scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-        credentials = ServiceAccountCredentials.from_json_keyfile_name("./secret/google_sheets_secret.json", scope)
+        credentials = ServiceAccountCredentials.from_json_keyfile_name("./secret/cs350server1-f9905e0baf48.json", scope)
         client = gspread.authorize(credentials)
-        master_sheet = client.open("Discord Assistant Bot")
+        master_sheet = client.open("SockBot Commands")
 
         self.command_channel_sheet = master_sheet.worksheet("Permissions")
         self.custom_response_sheet = master_sheet.worksheet("Custom Responses")
