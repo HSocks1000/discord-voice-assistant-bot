@@ -1,4 +1,6 @@
 import gspread
+import time
+
 from oauth2client.service_account import ServiceAccountCredentials
 
 
@@ -9,8 +11,13 @@ class GoogleSheetsClient:
 
     def __init__(self):
         print("Connecting to Google Sheets...")
-        self.refresh_records()
+        for i in range(24):
+            self.refresh_records()
 
+    def refresh_refresh(self):
+        starttime = time.time()
+        self.refresh_records()
+        time.sleep(60.0 - ((time.time() - starttime) % 60.0))
 
     def refresh_records(self):
         scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
@@ -30,6 +37,8 @@ class GoogleSheetsClient:
         for entry in self.command_channel_records:
             if str(entry["server_id"]) == server_id:
                 return entry["command_channel_id"]
+        #self.refresh_records()
+
 
     def get_custom_response(self, text):
         for entry in self.custom_response_records:
@@ -38,10 +47,13 @@ class GoogleSheetsClient:
             for phrase in trigger_phrases:
                 if phrase in text:
                     return entry["response"]
+        #self.refresh_records()
 
     def is_command_channel(self, text_channel, server_id):
         for entry in self.command_channel_records:
             if str(entry["server_id"]) == server_id and entry["command_channel_name"] == text_channel:
+                #self.refresh_records()
                 return True
 
         return False
+        #self.refresh_records()

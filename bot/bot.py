@@ -4,12 +4,14 @@ from discord.ext import commands
 from threading import Thread
 import os
 import signal
+import time
 
 bot = commands.Bot(command_prefix=".", description="yo yo yo\n\nHere's what I know how to do:")
 
 # Configure cogs
 sheets_client = GoogleSheetsClient()
 music_client = Music(bot)
+
 bot.add_cog(music_client)
 
 
