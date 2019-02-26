@@ -11,8 +11,7 @@ class GoogleSheetsClient:
 
     def __init__(self):
         print("Connecting to Google Sheets...")
-        for i in range(24):
-            self.refresh_records()
+        self.refresh_records()
 
     def refresh_refresh(self):
         starttime = time.time()
