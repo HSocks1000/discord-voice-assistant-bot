@@ -13,10 +13,10 @@ class GoogleSheetsClient:
         print("Connecting to Google Sheets...")
         self.refresh_records()
 
-    def refresh_refresh(self):
-        starttime = time.time()
-        self.refresh_records()
-        time.sleep(60.0 - ((time.time() - starttime) % 60.0))
+    # def refresh_refresh(self):
+    #     starttime = time.time()
+    #     self.refresh_records()
+    #     time.sleep(60.0 - ((time.time() - starttime) % 60.0))
 
     def refresh_records(self):
         scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
