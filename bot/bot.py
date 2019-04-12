@@ -5,6 +5,7 @@ from threading import Thread
 import os
 import signal
 import time
+from time import sleep
 
 bot = commands.Bot(command_prefix=".", description="yo yo yo\n\nHere's what I know how to do:")
 
@@ -16,7 +17,7 @@ bot.add_cog(music_client)
 
 
 def start_bot():
-    print("Connecting to Discord...")
+    print("I be Connecting to Discord...")
     with open("./secret/token.txt") as token_file:
         token = token_file.readline().strip()
         bot.run(token)
@@ -25,7 +26,6 @@ def start_bot():
 # Run the bot on its own thread
 thread = Thread(target=start_bot, args=())
 thread.start()
-
 
 # discord.py commands and events
 
@@ -66,6 +66,7 @@ async def on_message(message):
     #     """
          supported_audio_sites = ("youtube", "soundcloud")
          for site in supported_audio_sites:
+
              if site in custom_response:  # ♫ Audio response!
                  await music_client.audio_response(message, custom_response)
                  return
@@ -115,3 +116,11 @@ async def get_online_users():
             voice_channel_dict[voice_channel].append(member.name)
 
     return voice_channel_dict
+
+
+#Refreshes google sheets every n seconds.  This eliminates the need
+#for an external service to handle instant spreadsheet updating.
+SheetRefresh = True
+while SheetRefresh == True:
+    sheets_client.refresh_records()
+    time.sleep(10)
